@@ -1,6 +1,6 @@
 <img src="assets/header.svg" width="100%" alt="Jeffrey Montoya. CompTIA Security+, SecDevOps, agent infrastructure, REST APIs. Plan once, automate the rest. A flag is hidden in this profile.">
 
-<a href="#cybersecurity"><img src="assets/tile-security.svg" width="49%" alt="Cybersecurity: a network scan finds one anomalous host and isolates it."></a>
+<a href="#cybersecurity"><img src="assets/tile-security.svg" width="49%" alt="Cybersecurity: a tailnet-sentry scan marks seven devices healthy, flags one anomaly and quarantines it."></a>
 <a href="#secdevops"><img src="assets/tile-secdevops.svg" width="49%" alt="SecDevOps: a five-stage pipeline fails a test, retries, then scans, signs and ships."></a>
 <a href="#agent-infrastructure"><img src="assets/tile-agents.svg" width="49%" alt="Agent infrastructure: agents query a code graph and get small, budgeted context packets back."></a>
 <a href="#apis-and-automation"><img src="assets/tile-automation.svg" width="49%" alt="APIs and automation: a cron job hits a 503, backs off, retries, and gets 201 Created."></a>

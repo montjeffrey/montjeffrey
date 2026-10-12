@@ -307,18 +307,22 @@ def tile_security(piece_hex):
             s.rect(hx + 1, hy + 1, 5, 3, P["green"])
             s.close()
 
-    log(s, 46, [(3, END, "> SCAN 10.0.7.0/24", P["cyan"])])
-    log(s, 52, [(22, END, "> 8 HOSTS. 1 ANOMALY", P["amber"])])
-    log(s, 58, [(46, END, "> HOST-7 ISOLATED", P["green"])])
+    # The lines mirror real `sentry scan` / `sentry isolate` output from
+    # github.com/montjeffrey/tailnet-sentry: an inventory of the tailnet
+    # through the Tailscale API, never a subnet scan.
+    log(s, 46, [(3, END, "> SENTRY SCAN TAILNET", P["cyan"])])
+    log(s, 52, [(22, END, "> 7 HEALTHY. 1 ANOMALY", P["amber"])])
+    log(s, 58, [(46, END, "> HOST-7 QUARANTINED", P["green"])])
     log(s, 64, [(56, 70, "> PCAP %s  1/4" % piece_hex, P["white"]),
                 (70, END, "> CASE CLOSED", P["dim"])])
     finish(s, P["cyan"])
     return s.render(
         "Cybersecurity",
-        "A network scan sweeps across eight hosts and marks them healthy; one "
-        "shows an anomaly and is isolated, its links cut. A log narrates the "
-        "scan, and for a moment a packet-capture line shows one encoded "
-        "piece of the profile's capture-the-flag.")
+        "A tailnet-sentry scan inventories eight devices on the tailnet and "
+        "marks seven healthy against a known-good baseline; one is flagged as "
+        "an anomaly and quarantined, its links cut. A log narrates the scan, "
+        "and for a moment a packet-capture line shows one encoded piece of "
+        "the profile's capture-the-flag.")
 
 
 def tile_secdevops(piece_b32):
