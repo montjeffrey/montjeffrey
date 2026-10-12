@@ -4,9 +4,10 @@
 Runs daily in GitHub Actions (.github/workflows/oss.yml), so the section is
 never maintained by hand:
 
-* Maintaining: repos I own that are public, licensed, not forks and not
-  archived, minus any listed under "exclude" in oss/config.json. Making a repo
-  public with a license is what puts it here.
+* Maintaining: repos I own that are public, open-source licensed, not forks
+  and not archived, minus any listed under "exclude" in oss/config.json.
+  Making a repo public with an open-source license is what puts it here; a
+  client's site with an all-rights-reserved notice never qualifies.
 * Contributing: public repos owned by someone else where I have a merged pull
   request, with the merged count, PRs still in review, and where I rank among
   the project's contributors. A project where I only have PRs in review is
@@ -102,6 +103,17 @@ class GitHub:
         return (json.loads(body) if body else None), link
 
 
+def open_license(repo: dict) -> bool:
+    """True for a license GitHub recognises, such as MIT or Apache-2.0.
+
+    A custom LICENSE file, like the all-rights-reserved notice on a client's
+    site, comes back as NOASSERTION. That code belongs to the client, so it is
+    not a project I maintain in the open.
+    """
+    spdx = str((repo.get("license") or {}).get("spdx_id") or "")
+    return spdx not in ("", "NOASSERTION")
+
+
 def own_projects(api: GitHub, login: str, exclude: list[str]) -> list[dict]:
     skip = {n.lower() for n in exclude} | {login.lower()}
     repos: list[dict] = []
@@ -118,7 +130,7 @@ def own_projects(api: GitHub, login: str, exclude: list[str]) -> list[dict]:
         owner = str((r.get("owner") or {}).get("login") or "")
         full = "%s/%s" % (login, name)
         if (owner.lower() != login.lower() or r.get("fork") or r.get("archived")
-                or r.get("private") or not r.get("license")
+                or r.get("private") or not open_license(r)
                 or name.lower() in skip or not valid_repo(full)):
             continue
         rel, _ = api.get("/repos/%s/releases/latest" % full)

@@ -31,7 +31,8 @@ class FakeApi(update.GitHub):
 
 def repo(name, **kw):
     r = {"name": name, "owner": {"login": LOGIN}, "fork": False,
-         "archived": False, "private": False, "license": {"key": "mit"},
+         "archived": False, "private": False,
+         "license": {"key": "mit", "spdx_id": "MIT"},
          "description": name + " does things", "stargazers_count": 0}
     r.update(kw)
     return r
@@ -80,6 +81,8 @@ class Own(unittest.TestCase):
         repos = [repo("landfirst", stargazers_count=3), repo("compute-pool"),
                  repo("a-fork", fork=True), repo("old", archived=True),
                  repo("secret", private=True), repo("site", license=None),
+                 repo("client-site", license={"key": "other",
+                                              "spdx_id": "NOASSERTION"}),
                  repo(LOGIN), repo("hidden"),
                  repo("theirs", owner={"login": "someone"})]
         api = FakeApi({

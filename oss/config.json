@@ -1,6 +1,10 @@
 {
-  "exclude": [],
+  "exclude": [
+    "CasaDraft",
+    "LevelzBarberStudio"
+  ],
   "notes": {
     "affaan-m/ECC": "Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes."
-  }
+  },
+  "_exclude_why": "Client sites: the code belongs to the client, so it is never listed as a project I maintain."
 }
