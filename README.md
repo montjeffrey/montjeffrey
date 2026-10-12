@@ -88,8 +88,25 @@ here on its own.
 ### Capture the flag
 
 A flag is hidden in the four tiles above. Each tile flashes one piece of it
-for a moment, and each piece is encoded differently. Put them together in
-order as `FLAG{PIECE1_PIECE2_PIECE3_PIECE4}`.
+for a moment, wrapped in a different encoding. Unwrapping it is the easy
+part: underneath, every piece is encrypted with the cipher a French diplomat
+got credit for in the 1500s, and each tile's key is the answer to a question
+about my work. You won't find the answers on this page. You'll find them by
+reading the projects.
+
+1. **Cybersecurity.** In tailnet-sentry, what tag is an isolated device left
+   wearing?
+2. **SecDevOps.** compute-pool's releases after v0.1.0 carry a signed record of
+   where each binary was built. What is it called? *(two words)*
+3. **Agent infrastructure.** landfirst predicts conflicts with a git plumbing
+   command that needs git 2.38 or newer. Which one?
+4. **APIs and automation.** When the CRM throttles me, what is it actually
+   saying? *(three words)*
+
+Keys are the answers in capitals, letters only: no spaces, punctuation or
+digits. Each key is at least as long as its piece, so there's no shortcut
+around the question. Put the pieces together in order as
+`FLAG{PIECE1_PIECE2_PIECE3_PIECE4}`.
 
 **Don't post the flag.** Issues are public. Post proof that you have it: the
 SHA-256 of the flag, a colon, and your GitHub login in lowercase.
@@ -118,14 +135,23 @@ A GitHub Action checks it within a minute, replies, and adds you below.
 - The issue body is read from the event payload by a standard-library Python
   script and treated purely as data. No untrusted text is ever placed in a
   shell command or workflow expression.
-- The workflow token has no permissions by default; the one job gets exactly
-  `contents: write` and `issues: write`.
+- The workflow token has no permissions by default, and each job gets only
+  what it needs: verifying can only read, only recording can push, and only
+  replying can touch issues. Git credentials are never left on disk while the
+  checker reads a submission.
 - The only third-party action is pinned to a full commit SHA.
-- The comparison is constant-time, the hall of fame is capped and
-  de-duplicated, and runs are serialised so two solvers can't race.
-- If someone pastes the raw flag, the bot redacts the issue.
+- The hall of fame is capped and de-duplicated. Each submission gets its own
+  run, so a burst of issues can't cancel a real one, and recording rebuilds
+  the list on the latest commit and retries, so two solvers can't race. You're
+  only told you made the list once the commit has landed.
+- If someone pastes the flag, wrapped or not, in the title or the body, the
+  bot redacts the issue and locks it. The original stays in the issue's edit
+  history until I delete that revision by hand, because GitHub only lets the
+  owner do that.
 - The flag pieces are drawn as pixels, not stored as text, so they can't be
-  found by searching the images' source.
+  found by searching the images' source. Even read straight out of the pixels,
+  each is ciphertext under a key as long as itself. Neither the flag nor the
+  keys are in the repository.
 
 [Workflow](.github/workflows/ctf.yml) · [Checker](ctf/check.py) · [Tests](ctf/test_check.py)
 </details>

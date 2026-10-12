@@ -5,13 +5,21 @@
 #   applies. Issue-event workflows always run from the default branch, so a
 #   visitor can never change this file or the scripts it calls.
 # - No untrusted value is interpolated into a `run:` script. ctf/check.py reads
-#   the issue body from the event payload file and treats it purely as data.
-#   Shells only ever see our own outputs, an issue number and the repo name,
+#   the issue from the event payload file and treats it purely as data.
+#   Shells only ever see our own outputs, an issue number and repo metadata,
 #   and only through environment variables.
-# - The token has no permissions by default; this one job gets exactly
-#   contents: write (hall of fame) and issues: write (reply, close, redact).
+# - Three jobs, each with only the token it needs: `verify` can read the repo
+#   and nothing else, `record` is the only job that can push, and `reply` is
+#   the only job that can touch issues. No job keeps git credentials on disk
+#   except the one that pushes.
 # - The only third-party action is pinned to a full commit SHA, not a tag.
-# - Runs are serialised so two solvers cannot race on README.md.
+# - Runs are keyed per issue, not on one shared group, because GitHub keeps at
+#   most one pending run per concurrency group and cancels the rest: a burst of
+#   issues must never silently drop a real solver. Instead, `record` rebuilds
+#   the hall of fame on the latest default branch and retries the push, so
+#   concurrent solvers, and the daily open-source commit, cannot clobber each
+#   other.
+# - A solver is only told they are in the hall of fame once the push landed.
 name: ctf
 
 on:
@@ -21,7 +29,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: ctf-hall-of-fame
+  group: ctf-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
@@ -30,43 +38,104 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: write
-      issues: write
+      contents: read
+    outputs:
+      result: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Check the submission
         id: check
         env:
           CTF_FLAG: ${{ secrets.CTF_FLAG }}
-        run: python3 ctf/check.py
+        run: python3 -I ctf/check.py
 
-      - name: Record the solver
-        if: steps.check.outputs.added == 'true'
+  record:
+    needs: verify
+    if: needs.verify.outputs.result == 'correct'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      added: ${{ steps.hall.outputs.added }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Add the solver and push
+        id: hall
+        env:
+          CTF_FLAG: ${{ secrets.CTF_FLAG }}
+          BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "ctf: add a solver to the hall of fame"
-          git push
+          out="$RUNNER_TEMP/attempt.out"
+          for attempt in 1 2 3 4 5; do
+            git fetch --quiet origin "$BRANCH"
+            git reset --quiet --hard FETCH_HEAD
+            rm -f "$out"
+            GITHUB_OUTPUT="$out" python3 -I ctf/check.py --record
+            if ! grep -qx 'added=true' "$out"; then
+              echo "added=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git add README.md
+            git commit --quiet -m "ctf: add a solver to the hall of fame"
+            if git push --quiet origin "HEAD:$BRANCH"; then
+              echo "added=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+          exit 1
+
+  reply:
+    needs: [verify, record]
+    if: always() && needs.verify.outputs.result != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: ctf/replies
 
       - name: Reply and close
-        if: always() && steps.check.outputs.result != ''
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           ISSUE: ${{ github.event.issue.number }}
-          RESULT: ${{ steps.check.outputs.result }}
-          ADDED: ${{ steps.check.outputs.added }}
+          RESULT: ${{ needs.verify.outputs.result }}
+          RECORDED: ${{ needs.record.result }}
+          ADDED: ${{ needs.record.outputs.added }}
         run: |
           case "$RESULT" in
             correct)
+              if [ "$RECORDED" != "success" ]; then
+                # Verified, but the hall of fame did not update. Leave the
+                # issue open so the maintainer sees it and can add them.
+                gh issue comment "$ISSUE" --repo "$REPO" --body-file ctf/replies/pending.md
+                exit 0
+              fi
               if [ "$ADDED" = "true" ]; then msg=ctf/replies/correct.md
               else msg=ctf/replies/already.md; fi ;;
             wrong) msg=ctf/replies/wrong.md ;;
             leaked)
-              gh issue edit "$ISSUE" --repo "$REPO" --body-file ctf/replies/redacted.md
-              msg=ctf/replies/leaked.md ;;
+              gh issue edit "$ISSUE" --repo "$REPO" --title "ctf: proof (redacted)" \
+                --body-file ctf/replies/redacted.md
+              gh issue comment "$ISSUE" --repo "$REPO" --body-file ctf/replies/leaked.md
+              gh issue close "$ISSUE" --repo "$REPO"
+              # The original text survives in the issue's edit history, which
+              # only the maintainer can delete. Locking stops it being re-posted
+              # in a comment meanwhile.
+              gh issue lock "$ISSUE" --repo "$REPO" --reason resolved
+              exit 0 ;;
             *) msg=ctf/replies/invalid.md ;;
           esac
           gh issue comment "$ISSUE" --repo "$REPO" --body-file "$msg"
