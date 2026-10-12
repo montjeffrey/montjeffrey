@@ -1,3 +1,5 @@
 preview.html
 __pycache__/
 *.pyc
+# Local CTF flag and keys: see docs/ctf.md. Never commit these.
+.ctf/

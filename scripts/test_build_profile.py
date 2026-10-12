@@ -52,5 +52,21 @@ class Pieces(unittest.TestCase):
                 bp.parse_keys(bad)
 
 
+
+class Fit(unittest.TestCase):
+    def test_a_piece_too_wide_for_its_tile_is_refused(self):
+        too_long = " ".join(["41"] * 8)          # 8 letters of hex
+        with self.assertRaises(SystemExit):
+            bp.tile_security(too_long)
+
+    def test_the_documented_maximums_fit(self):
+        hexa, b32, rot, plain = bp.pieces(
+            "FLAG{%s_%s_%s_%s}" % ("W" * 7, "W" * 10, "W" * 9, "W" * 15),
+            KEYS)
+        bp.tile_security(hexa)
+        bp.tile_secdevops(b32)
+        bp.tile_agents(rot)
+        bp.tile_automation(plain)
+
 if __name__ == "__main__":
     unittest.main()
