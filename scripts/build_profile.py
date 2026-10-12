@@ -27,6 +27,8 @@ CTF_FLAG Actions secret (the checker never needs the keys).
 
 Rotate the flag whenever the encoding scheme changes: older tiles stay readable
 in git history.
+The full procedure, the rules a flag must follow and the per-tile length
+limits are in docs/ctf.md.
 
 Craft notes, because each of these is the thing that breaks naive builds:
 
@@ -255,6 +257,10 @@ def finish(s, accent):
 
 def log(s, y, entries):
     for start, end, line, colour in entries:
+        if 4 + text_width(line) > s.w - 2:
+            # Report only the width: the line may carry a flag piece.
+            raise SystemExit("a %d px log line does not fit a %d px tile; use "
+                             "a shorter flag piece" % (4 + text_width(line), s.w))
         s.window(start, end)
         s.text(4, y, line, colour)
         s.close()

@@ -108,6 +108,20 @@ digits. Each key is at least as long as its piece, so there's no shortcut
 around the question. Put the pieces together in order as
 `FLAG{PIECE1_PIECE2_PIECE3_PIECE4}`.
 
+**Rules.**
+
+- Everything you need is public: this page and my repositories. Nothing
+  requires touching my machines, my tailnet, or anyone else's.
+- Solve it, don't attack it. The checker treats every issue as plain data, so
+  tricks just earn "no proof found", and flooding it gets you blocked.
+- Submit from your own account. A proof only works for the login that opens
+  the issue.
+- Scripts for decoding are fine. Brute-forcing the keys isn't a shortcut:
+  each key is as long as its piece.
+- Keep it spoiler-free here. No flag, pieces, keys or walkthroughs in issues
+  or pull requests.
+- The flag changes from time to time. Hall-of-fame places are permanent.
+
 **Don't post the flag.** Issues are public. Post proof that you have it: the
 SHA-256 of the flag, a colon, and your GitHub login in lowercase.
 
@@ -153,7 +167,7 @@ A GitHub Action checks it within a minute, replies, and adds you below.
   each is ciphertext under a key as long as itself. Neither the flag nor the
   keys are in the repository.
 
-[Workflow](.github/workflows/ctf.yml) · [Checker](ctf/check.py) · [Tests](ctf/test_check.py)
+[Workflow](.github/workflows/ctf.yml) · [Checker](ctf/check.py) · [Tests](ctf/test_check.py) · [Runbook](docs/ctf.md)
 </details>
 
 #### Hall of fame
