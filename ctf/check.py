@@ -12,7 +12,8 @@ reads it, and it treats it strictly as data:
   written anywhere.
 * Visitors never post the flag. They post sha256("<flag>:<their login>"), so
   a correct answer in a public issue is useless to anyone else, and the flag
-  itself only exists in an Actions secret.
+  itself only exists in an Actions secret. A body or title that carries the
+  flag anyway, with or without FLAG{}, is reported as 'leaked'.
 * The comparison is constant-time.
 * The login comes from GitHub's own payload, and is still checked against
   GitHub's username rules before it is written into the README.
@@ -51,13 +52,23 @@ def extract_proof(body: str | None) -> str | None:
     return found.group(1) if found else None
 
 
-def verdict(flag: str, login: str, body: str | None) -> str:
+def leaks(flag: str, text: str | None) -> bool:
+    """Whether text carries the flag, wrapped or not."""
+    if not text:
+        return False
+    low = text.lower()
+    inner = flag[flag.find("{") + 1:flag.rfind("}")].lower()
+    return "flag{" in low or (len(inner) >= 4 and inner in low)
+
+
+def verdict(flag: str, login: str, body: str | None,
+            title: str | None = None) -> str:
     """'correct', 'wrong', 'invalid' (no proof found) or 'leaked'.
 
-    'leaked' means the visitor pasted the flag itself into a public issue;
-    the workflow redacts the issue body so it does not spoil the challenge.
+    'leaked' means the visitor pasted the flag itself, in the body or the
+    title, wrapped in FLAG{} or not; the workflow redacts and locks the issue.
     """
-    if body and "flag{" in body.lower():
+    if leaks(flag, body) or leaks(flag, title):
         return "leaked"
     proof = extract_proof(body)
     if proof is None:
@@ -103,7 +114,14 @@ def _output(**pairs: str) -> None:
         sys.stdout.write(lines)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    """Verify only, or with --record also add a correct solver to README.md.
+
+    The workflow verifies in a read-only job and records in a separate job
+    that holds the write token, re-verifying there rather than trusting an
+    output handed across.
+    """
+    record = "--record" in (sys.argv[1:] if argv is None else argv)
     flag = os.environ.get("CTF_FLAG", "")
     if not flag:
         print("CTF_FLAG secret is not configured", file=sys.stderr)
@@ -112,9 +130,9 @@ def main() -> int:
                        .read_text(encoding="utf-8"))
     issue = event["issue"]
     login = issue["user"]["login"]
-    result = verdict(flag, login, issue.get("body"))
+    result = verdict(flag, login, issue.get("body"), issue.get("title"))
     added = False
-    if result == "correct":
+    if result == "correct" and record:
         readme = pathlib.Path("README.md")
         text, added = add_to_hall(readme.read_text(encoding="utf-8"), login,
                                   datetime.date.today().isoformat())

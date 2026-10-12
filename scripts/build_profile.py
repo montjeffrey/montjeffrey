@@ -3,20 +3,30 @@
 
 Each tile is its own SVG so the README can wrap it in a link. Each tile also
 flashes one piece of the capture-the-flag answer for about a second and a half
-per loop, and every piece uses a different encoding:
+per loop. Every piece is first Vigenere-encrypted with a key that is the answer
+to that tile's clue in the README -- a fact you only learn by reading my work --
+and then wrapped in a different encoding:
 
     1 cybersecurity   hex      in a packet-capture line
     2 secdevops       base32   as a build artifact name
     3 agent infra     ROT13    in a memory lookup
     4 automation      plain    in an API response body
 
-The pieces are drawn as pixels, never as text, so they cannot be found by
-searching the SVG source -- you have to watch. They are derived from the flag
-at build time, so the art and the answer cannot drift apart, and the flag
-itself is never committed: pass it in CTF_FLAG when building, and store the
-same value as the repository's CTF_FLAG Actions secret.
+The outer encodings are the easy part. Without the key a piece is a one-time
+pad: each key is at least as long as its piece, so every word of that length
+is an equally good guess.
 
-    CTF_FLAG='FLAG{A_B_C_D}' python scripts/build_profile.py
+The pieces are drawn as pixels, never as text, so they cannot be found by
+searching the SVG source. They are derived at build time, so the art and the
+answer cannot drift apart, and neither the flag nor the keys are committed:
+pass them in when building, and store the same flag as the repository's
+CTF_FLAG Actions secret (the checker never needs the keys).
+
+    CTF_FLAG='FLAG{A_B_C_D}' CTF_KEYS='KEYA,KEYB,KEYC,KEYD' \
+        python scripts/build_profile.py
+
+Rotate the flag whenever the encoding scheme changes: older tiles stay readable
+in git history.
 
 Craft notes, because each of these is the thing that breaks naive builds:
 
@@ -559,11 +569,32 @@ def header():
         "profile.")
 
 
-def pieces(flag: str):
+def vigenere(text: str, key: str, sign: int = 1) -> str:
+    """Shift each letter of text by the matching letter of key (A=0)."""
+    return "".join(chr((ord(t) - 65 + sign * (ord(k) - 65)) % 26 + 65)
+                   for t, k in zip(text, key))
+
+
+def parse_keys(raw: str) -> tuple[str, str, str, str]:
+    """Four clue answers, comma-separated; only their letters count.
+
+    Commas, not colons: an answer like tag:quarantine must stay one key.
+    """
+    keys = tuple(re.sub(r"[^A-Z]", "", k.upper()) for k in raw.split(","))
+    if len(keys) != 4 or not all(keys):
+        raise SystemExit("CTF_KEYS must be four clue answers: KEYA,KEYB,KEYC,KEYD")
+    return keys
+
+
+def pieces(flag: str, keys: tuple[str, str, str, str]):
     m = re.fullmatch(r"FLAG\{([A-Z]+)_([A-Z]+)_([A-Z]+)_([A-Z]+)\}", flag)
     if not m:
         raise SystemExit("CTF_FLAG must look like FLAG{A_B_C_D}, uppercase")
-    a, b, c, d = m.groups()
+    for n, (piece, key) in enumerate(zip(m.groups(), keys), 1):
+        if len(key) < len(piece):
+            raise SystemExit("key %d is shorter than piece %d: a short key "
+                             "repeats and can be brute-forced" % (n, n))
+    a, b, c, d = (vigenere(p, k) for p, k in zip(m.groups(), keys))
     return (" ".join("%02X" % ch for ch in a.encode()),
             base64.b32encode(b.encode()).decode(),
             codecs.encode(c, "rot13"),
@@ -572,7 +603,7 @@ def pieces(flag: str):
 
 def main():
     flag = os.environ.get("CTF_FLAG", "")
-    hexa, b32, rot, plain = pieces(flag)
+    hexa, b32, rot, plain = pieces(flag, parse_keys(os.environ.get("CTF_KEYS", "")))
     assets = pathlib.Path(__file__).resolve().parent.parent / "assets"
     assets.mkdir(parents=True, exist_ok=True)
     built = {

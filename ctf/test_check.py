@@ -46,6 +46,15 @@ class Proof(unittest.TestCase):
         self.assertEqual(check.verdict(FLAG, "octocat", good + " " + FLAG.lower()),
                          "leaked")
 
+    def test_unwrapped_flag_or_flag_in_title_is_a_leak(self):
+        good = check.expected(FLAG, "octocat")
+        self.assertEqual(check.verdict(FLAG, "octocat", "it's test! " + good),
+                         "leaked")
+        self.assertEqual(check.verdict(FLAG, "octocat", good, "FLAG{TEST}"),
+                         "leaked")
+        self.assertEqual(check.verdict(FLAG, "octocat", good, "ctf: proof"),
+                         "correct")
+
     def test_hex_embedded_in_a_longer_run_is_ignored(self):
         good = check.expected(FLAG, "octocat")
         self.assertEqual(check.verdict(FLAG, "octocat", "a" + good), "invalid")
@@ -97,7 +106,7 @@ class Hall(unittest.TestCase):
 
 
 class Main(unittest.TestCase):
-    def run_main(self, login, body, flag=FLAG):
+    def run_main(self, login, body, flag=FLAG, argv=("--record",)):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = pathlib.Path(tmp)
             (tmp / "README.md").write_text(README, encoding="utf-8")
@@ -112,7 +121,7 @@ class Main(unittest.TestCase):
             try:
                 os.chdir(tmp)
                 with mock.patch.dict(os.environ, env):
-                    code = check.main()
+                    code = check.main(list(argv))
             finally:
                 os.chdir(cwd)
             return (code, out.read_text(encoding="utf-8") if out.exists() else "",
@@ -125,6 +134,13 @@ class Main(unittest.TestCase):
         self.assertIn("result=correct", out)
         self.assertIn("added=true", out)
         self.assertIn("@octocat", readme)
+
+    def test_verify_only_never_writes_the_readme(self):
+        code, out, readme = self.run_main(
+            "octocat", check.expected(FLAG, "octocat"), argv=())
+        self.assertIn("result=correct", out)
+        self.assertIn("added=false", out)
+        self.assertEqual(readme, README)
 
     def test_wrong_submission_leaves_readme_alone(self):
         code, out, readme = self.run_main("octocat", "f" * 64)
