@@ -1,6 +1,9 @@
 {
   "exclude": [
     "CasaDraft",
+    "elevateHRG",
+    "GenZMAMA",
+    "levelz-barber-studio",
     "LevelzBarberStudio"
   ],
   "notes": {
