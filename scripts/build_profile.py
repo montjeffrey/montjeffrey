@@ -349,15 +349,15 @@ def tile_secdevops(piece_b32):
 
     log(s, 30, [(2, 46, "RUN #211  MAIN  7F3A9C1", P["dim"]),
                 (50, END, "RUN #212  MAIN  A1F3C9E", P["dim"])])
-    log(s, 36, [(12, 46, "TEST  412 PASSED", P["green"]),
+    log(s, 36, [(12, 46, "TEST  GO TEST ./... OK", P["green"]),
                 (58, 67, "TEST  1 FAILED. RETRY", P["red"]),
-                (67, END, "TEST  412 PASSED", P["green"])])
-    log(s, 42, [(19, 46, "SCAN  0 SECRETS. 0 CVES", P["green"]),
-                (71, END, "SCAN  0 SECRETS. 0 CVES", P["green"])])
-    log(s, 48, [(26, 46, "SIGN  PROVENANCE ATTESTED", P["green"]),
-                (75, END, "SIGN  PROVENANCE ATTESTED", P["green"])])
-    log(s, 54, [(33, 46, "SHIP  ROLLOUT 100%", P["green"]),
-                (79, END, "SHIP  ROLLOUT 100%", P["green"])])
+                (67, END, "TEST  GO TEST ./... OK", P["green"])])
+    log(s, 42, [(19, 46, "SCAN  GITLEAKS 0  VULNS 0", P["green"]),
+                (71, END, "SCAN  GITLEAKS 0  VULNS 0", P["green"])])
+    log(s, 48, [(26, 46, "SIGN  BUILD PROVENANCE", P["green"]),
+                (75, END, "SIGN  BUILD PROVENANCE", P["green"])])
+    log(s, 54, [(33, 46, "SHIP  RELEASE + SHA256SUMS", P["green"]),
+                (79, END, "SHIP  RELEASE + SHA256SUMS", P["green"])])
     log(s, 62, [(36, 50, "> BLOB %s 2/4" % piece_b32, P["white"])])
     finish(s, P["green"])
     return s.render(
@@ -494,7 +494,7 @@ def tile_automation(piece_plain):
     req(6, P["white"]); label(6, 16, "GET /JOBS", P["white"])
     resp(16, P["green"]); label(16, 28, "200 OK", P["green"])
     req(30, P["white"]); label(30, 40, "POST /JOBS", P["white"])
-    resp(40, P["red"]); label(40, 46, "503 UNAVAILABLE", P["red"])
+    resp(40, P["red"]); label(40, 46, "429 THROTTLED", P["red"])
     label(46, 49, "WAIT 1S", P["amber"], 25)
     label(49, 52, "WAIT 2S", P["amber"], 25)
     label(52, 56, "WAIT 4S", P["amber"], 25)
@@ -503,14 +503,14 @@ def tile_automation(piece_plain):
     resp(76, P["mag"]); label(76, 86, "HOOK JOB.DONE", P["mag"])
 
     log(s, 36, [(22, END, "GET  /JOBS   200   41MS", P["green"])])
-    log(s, 42, [(46, END, "POST /JOBS   503", P["red"])])
+    log(s, 42, [(46, END, "POST /JOBS   429", P["red"])])
     log(s, 48, [(70, END, "POST /JOBS   201   BACKOFF", P["green"])])
     log(s, 54, [(82, END, "HOOK JOB.DONE   ACK 200", P["mag"])])
     log(s, 62, [(80, END, "BODY {PART:4,V:%s}" % piece_plain, P["white"])])
     finish(s, P["orange"])
     return s.render(
         "REST APIs and automation",
-        "A cron job calls an API: a GET returns 200, a POST hits a 503 and "
+        "A cron job calls an API: a GET returns 200, a POST is throttled with 429 and "
         "backs off for one, two and four seconds before retrying and getting "
         "201 Created, and then a webhook reports the job done. Near the end "
         "of each loop a response body carries one piece of the profile's "
