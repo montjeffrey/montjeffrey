@@ -1,0 +1,19 @@
+name: Submit a CTF proof
+description: Found the flag hidden in this profile? Prove it without posting it.
+title: "ctf: proof"
+labels: ["ctf"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not paste the flag.** Issues are public.
+
+        Paste the SHA-256 of `FLAG{...}:your-github-login`, with your login in lowercase.
+        The profile README has one-liners for bash, PowerShell and Python.
+  - type: input
+    id: proof
+    attributes:
+      label: Proof (64 hex characters)
+      placeholder: 3f1c9a...
+    validations:
+      required: true
