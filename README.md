@@ -59,6 +59,32 @@ That's one of many KPI and data-entry workflows I've automated to match how the
 company actually works. The repositories are private because they hold real
 customer and employee data.
 
+### Open source
+
+I maintain my own open-source projects and contribute to other people's. This
+section keeps itself current: a GitHub Action rebuilds it every day from the
+GitHub API, so a new project, a release or a newly merged pull request shows up
+here on its own.
+
+<!-- OSS:START -->
+**Maintaining** · 3 projects
+
+| Project | What it does | Release |
+|---|---|---|
+| [**compute-pool**](https://github.com/montjeffrey/compute-pool) | Share CPU between your own devices over Tailscale&#58; run commands on the least-loaded device, fan out tasks, live dashboard | [v0.1.4](https://github.com/montjeffrey/compute-pool/releases/tag/v0.1.4) |
+| [**landfirst**](https://github.com/montjeffrey/landfirst) | Which branch do I merge first? A live merge planner for repos with parallel local work - ranks branches by merge order, predicts conflicts… | [v0.4.0](https://github.com/montjeffrey/landfirst/releases/tag/v0.4.0) |
+| [**tailnet-sentry**](https://github.com/montjeffrey/tailnet-sentry) | Scan your own tailnet, mark known devices healthy, flag the anomaly, quarantine it. Defensive Go CLI over the Tailscale API. | [v0.1.0](https://github.com/montjeffrey/tailnet-sentry/releases/tag/v0.1.0) |
+
+**Contributing** · 14 pull requests merged across 1 project
+
+| Project | What it does | ★ | Merged | Standing |
+|---|---|---|---|---|
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 277k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 411 contributors |
+| [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 135 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
+
+<sub>Updated 2026-10-12 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<!-- OSS:END -->
+
 ### Capture the flag
 
 A flag is hidden in the four tiles above. Each tile flashes one piece of it
@@ -109,15 +135,6 @@ A GitHub Action checks it within a minute, replies, and adds you below.
 <!-- HALL:START -->
 _Nobody yet. Be the first._
 <!-- HALL:END -->
-
-### Upstream
-
-I'm the **#3 all-time contributor** to [affaan-m/ECC](https://github.com/affaan-m/ECC)
-(277k ★), an agent harness for Claude Code, Codex and Cursor. Most of my work
-there hardens its safety gate and adds the evaluation that measures whether its
-guardrails change outcomes at all. It is someone else's project and I am one
-contributor among many, but it is a large codebase with real maintainers, and I
-work well in it.
 
 ### Find me
 

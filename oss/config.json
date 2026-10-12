@@ -1,0 +1,6 @@
+{
+  "exclude": [],
+  "notes": {
+    "affaan-m/ECC": "Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes."
+  }
+}

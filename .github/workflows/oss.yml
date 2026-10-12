@@ -1,0 +1,55 @@
+# Rebuilds the README's open-source section from the GitHub API every day:
+# repos I maintain, and every outside project where I have merged or in-review
+# pull requests. See oss/update.py for what counts and why.
+#
+# Hardening:
+# - The token has no permissions by default; the one job gets contents: write,
+#   only to commit README.md. Reading public data needs nothing more.
+# - The only third-party action is pinned to a full commit SHA, not a tag.
+# - No untrusted value reaches a shell. oss/update.py validates every repo name
+#   and escapes every description before it writes markdown.
+# - It only touches the text between the OSS markers, so a rebase over a
+#   concurrent hall-of-fame commit from the ctf workflow always applies cleanly.
+name: open-source
+
+on:
+  schedule:
+    - cron: "23 7 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: open-source
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Test the generator
+        run: python3 -m unittest oss.test_update
+
+      - name: Rebuild the section
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_LOGIN: ${{ github.repository_owner }}
+        run: python3 -I oss/update.py
+
+      - name: Commit if anything changed
+        run: |
+          git diff --quiet -- README.md && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "oss: refresh the open-source section"
+          for attempt in 1 2 3; do
+            git push && exit 0
+            git pull --rebase --quiet
+          done
+          exit 1
