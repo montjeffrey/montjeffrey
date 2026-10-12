@@ -89,6 +89,10 @@ flag gives the old answer away.
    ```bash
    gh secret set CTF_FLAG --repo montjeffrey/montjeffrey < .ctf/flag
    ```
+   PowerShell has no `<` redirection. Run this from the repository folder:
+   ```powershell
+   gh secret set CTF_FLAG --repo montjeffrey/montjeffrey --body (Get-Content -Raw .ctf/flag)
+   ```
    A submission that lands between the merge and this step gets "Not quite".
    Re-run that issue's workflow once the secret is set.
 6. Leave the hall of fame alone. Earlier solvers keep their place.
