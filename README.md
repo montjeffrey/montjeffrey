@@ -41,13 +41,23 @@ The measured result goes here once it exists, not before.
 
 ### APIs and automation
 
-Most of my day-to-day work is automation for a residential energy-services
-company in New Jersey: getting a vendor CRM's data out (through its API where
-it has one, and a browser where it does not), loading and reconciling it in
-Postgres, creating jobs back through the API with the right program codes,
-scheduled jobs and webhooks, and retries with backoff for when an API has a
-bad day. Those repositories are private because they hold real customer and
-employee data.
+Most of my work automates the operations of a residential energy-services
+company in New Jersey. Its CRM has almost no API documentation, so I
+reverse-engineered the endpoints its own web app calls, and built on them:
+
+- **Automated KPI reporting.** Technician productivity, pulled from the CRM and
+  payroll and computed per technician, including the numbers that decide
+  bonuses. It runs on a schedule instead of by hand.
+- **Data pipelines.** The CRM's data loaded into Postgres, reconciled against
+  the source, and kept current with idempotent, append-only catch-up loads.
+- **Data entry, automated.** Jobs created back in the CRM with the right
+  program codes, instead of being typed twice.
+- **Built for a moody API.** Backoff when it throttles (HTTP 429), retries that
+  are safe to repeat, scheduled jobs and webhooks.
+
+That's one of many KPI and data-entry workflows I've automated to match how the
+company actually works. The repositories are private because they hold real
+customer and employee data.
 
 ### Capture the flag
 
