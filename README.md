@@ -96,7 +96,7 @@ about my work. You won't find the answers on this page. You'll find them by
 reading the projects.
 
 1. **Cybersecurity.** In tailnet-sentry, what tag is an isolated device left
-   wearing?
+   wearing? *(the tag's name only, without the `tag:` prefix)*
 2. **SecDevOps.** compute-pool's releases after v0.1.0 carry a signed record of
    where each binary was built. What is it called? *(two words)*
 3. **Agent infrastructure.** landfirst predicts conflicts with a git plumbing

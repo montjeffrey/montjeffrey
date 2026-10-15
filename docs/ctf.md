@@ -58,12 +58,20 @@ The clues live in the README and the answers are the keys. A key must be:
   When a project changes, re-read its clue. If the answer changed, update the
   clue and rotate.
 - **Normalised the same way the generator does it:** capitals, letters only.
-  `tag:quarantine` becomes `TAGQUARANTINE`, and `429 Too Many Requests`
-  becomes `TOOMANYREQUESTS`. The README tells players this rule, so say
-  "letters only" in any new clue whose answer contains digits.
+  `merge-tree` becomes `MERGETREE`, and `429 Too Many Requests` becomes
+  `TOOMANYREQUESTS`. The README tells players this rule, so say "letters
+  only" in any new clue whose answer contains digits.
+- **Unambiguous about which part counts.** If the answer is usually written
+  with a prefix or namespace, the clue must say whether it's included.
+  Clue 1's key is `QUARANTINE`, not `TAGQUARANTINE`, so the README says
+  "without the `tag:` prefix". Without that, a player who follows the
+  letters-only rule literally decrypts gibberish.
+- **Not drawn on the tiles.** The tiles' log lines and descriptions mustn't
+  spell out an answer. The SecDevOps tile used to say "BUILD PROVENANCE".
 
 `.ctf/keys` holds the four answers, comma-separated, in tile order. Commas,
-not colons, because an answer like `tag:quarantine` must stay one key.
+not colons, because an answer written like `build:provenance` must stay one
+key.
 
 ## Rotating the flag
 

@@ -374,8 +374,10 @@ def tile_secdevops(piece_b32):
                 (67, END, "TEST  GO TEST ./... OK", P["green"])])
     log(s, 42, [(19, 46, "SCAN  GITLEAKS 0  VULNS 0", P["green"]),
                 (71, END, "SCAN  GITLEAKS 0  VULNS 0", P["green"])])
-    log(s, 48, [(26, 46, "SIGN  BUILD PROVENANCE", P["green"]),
-                (75, END, "SIGN  BUILD PROVENANCE", P["green"])])
+    # Not the attestation's name: that is clue 2's answer, and answers stay
+    # off the page (docs/ctf.md).
+    log(s, 48, [(26, 46, "SIGN  ATTESTATION OK", P["green"]),
+                (75, END, "SIGN  ATTESTATION OK", P["green"])])
     log(s, 54, [(33, 46, "SHIP  RELEASE + SHA256SUMS", P["green"]),
                 (79, END, "SHIP  RELEASE + SHA256SUMS", P["green"])])
     log(s, 62, [(36, 50, "> BLOB %s 2/4" % piece_b32, P["white"])])
@@ -384,7 +386,7 @@ def tile_secdevops(piece_b32):
         "SecDevOps and CI/CD",
         "A five-stage pipeline: push, test, scan, sign, ship. The first run "
         "passes cleanly; the second fails a test, retries and then ships. A "
-        "run log shows zero leaked secrets, a signed provenance attestation "
+        "run log shows zero leaked secrets, a signed attestation "
         "and a full rollout, and for a moment a build artifact name carries "
         "one encoded piece of the profile's capture-the-flag.")
 
