@@ -67,10 +67,11 @@ GitHub API, so a new project, a release or a newly merged pull request shows up
 here on its own.
 
 <!-- OSS:START -->
-**Maintaining** · 3 projects
+**Maintaining** · 4 projects
 
 | Project | What it does | Release |
 |---|---|---|
+| [**agent-harness**](https://github.com/montjeffrey/agent-harness) | Portable memory &#38; token-efficiency harness for coding agents — queryable code graphs, human-approval gates, and one-command install for Cla… | — |
 | [**compute-pool**](https://github.com/montjeffrey/compute-pool) | Share CPU between your own devices over Tailscale&#58; run commands on the least-loaded device, fan out tasks, live dashboard | [v0.1.4](https://github.com/montjeffrey/compute-pool/releases/tag/v0.1.4) |
 | [**landfirst**](https://github.com/montjeffrey/landfirst) | Which branch do I merge first? A live merge planner for repos with parallel local work - ranks branches by merge order, predicts conflicts… | [v0.4.0](https://github.com/montjeffrey/landfirst/releases/tag/v0.4.0) |
 | [**tailnet-sentry**](https://github.com/montjeffrey/tailnet-sentry) | Scan your own tailnet, mark known devices healthy, flag the anomaly, quarantine it. Defensive Go CLI over the Tailscale API. | [v0.1.0](https://github.com/montjeffrey/tailnet-sentry/releases/tag/v0.1.0) |
@@ -79,11 +80,11 @@ here on its own.
 
 | Project | What it does | ★ | Merged | Standing |
 |---|---|---|---|---|
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 283k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 412 contributors |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 284k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 412 contributors |
 | [OpenMathLib/OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) | OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version. | 7.6k | [1](https://github.com/OpenMathLib/OpenBLAS/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | — |
 | [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 135 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 
-<sub>Updated 2026-10-19 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<sub>Updated 2026-10-20 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
 <!-- OSS:END -->
 
 ### Capture the flag
