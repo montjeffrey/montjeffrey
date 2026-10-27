@@ -80,11 +80,11 @@ here on its own.
 
 | Project | What it does | ★ | Merged | Standing |
 |---|---|---|---|---|
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 289k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 412 contributors |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 290k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 412 contributors |
 | [OpenMathLib/OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) | OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version. | 7.7k | [1](https://github.com/OpenMathLib/OpenBLAS/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | — |
 | [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 136 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 
-<sub>Updated 2026-10-26 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<sub>Updated 2026-10-27 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
 <!-- OSS:END -->
 
 ### Capture the flag
