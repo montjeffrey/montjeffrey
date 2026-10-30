@@ -9,6 +9,9 @@ I build the systems that let software, and the agents writing it, move fast
 without moving recklessly: secured pipelines, cheap and well-scoped agents, and
 automations that talk to real APIs and recover when those APIs misbehave.
 
+**Available** for automation, SecDevOps and small-business web projects, and
+for roles where security and automation are the job. [Work with me ↓](#work-with-me)
+
 ### Cybersecurity
 
 **CompTIA Security+ certified.** I treat security as an engineering property,
@@ -30,7 +33,7 @@ build for leaked private data before release.
 
 | | |
 |---|---|
-| **agent-harness** <sub>open-sourcing soon</sub> | Coding agents get the part of a codebase they need, not all of it: queryable code graphs, character-budgeted context packets, memory that survives between sessions, and human-approval gates. Works with Claude Code, Codex and Gemini. |
+| **[agent-harness](https://github.com/montjeffrey/agent-harness)** | Coding agents get the part of a codebase they need, not all of it: queryable code graphs, character-budgeted context packets, memory that survives between sessions, and human-approval gates. Works with Claude Code, Codex and Gemini. |
 | **[landfirst](https://github.com/montjeffrey/landfirst)** | When several agents finish work in parallel: did it actually land, and what merges next? Ranks branches by merge order and predicts conflicts. Go, one static binary. |
 | **[compute-pool](https://github.com/montjeffrey/compute-pool)** | Spread workloads across your own machines over Tailscale. Run on the least-loaded one, fan work out, watch it live. Go. |
 
@@ -179,8 +182,22 @@ A GitHub Action checks it within a minute, replies, and adds you below.
 _Nobody yet. Be the first._
 <!-- HALL:END -->
 
+### Work with me
+
+I take on a small number of projects alongside my main work.
+
+| | |
+|---|---|
+| **Automations and integrations** | Connect the tools a business already pays for: CRMs, job systems, payroll exports, spreadsheets and dashboards. Built for real APIs, with backoff, retries that are safe to repeat, and logs you can read. |
+| **SecDevOps reviews** | A pass over your repositories and CI/CD: actions pinned to commits, least-privilege tokens, OIDC publishing instead of stored secrets, secret scanning and dependency alerts. Findings arrive as pull requests, not a PDF. |
+| **Websites with security care** | Fast sites for small businesses that stay maintained after launch: dependency and framework updates, security headers, and email-spoofing protection (SPF, DKIM, DMARC). |
+
+Write to me with a sentence or two about what's slow, manual or worrying you,
+and I'll tell you honestly whether I'm the right person for it.
+
 ### Find me
 
+[montjeffrey.dev](https://montjeffrey.dev) ·
 [Portfolio](https://github.com/montjeffrey/portfolio) ·
 [montjeffrey@gmail.com](mailto:montjeffrey@gmail.com) · New Jersey
 
