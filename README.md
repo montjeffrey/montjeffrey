@@ -74,7 +74,7 @@ here on its own.
 
 | Project | What it does | Release |
 |---|---|---|
-| [**agent-harness**](https://github.com/montjeffrey/agent-harness) | Portable memory &#38; token-efficiency harness for coding agents — queryable code graphs, human-approval gates, and one-command install for Cla… | — |
+| [**agent-harness**](https://github.com/montjeffrey/agent-harness) ★ 1 | Portable memory &#38; token-efficiency harness for coding agents — queryable code graphs, human-approval gates, and one-command install for Cla… | — |
 | [**compute-pool**](https://github.com/montjeffrey/compute-pool) | Share CPU between your own devices over Tailscale&#58; run commands on the least-loaded device, fan out tasks, live dashboard | [v0.1.4](https://github.com/montjeffrey/compute-pool/releases/tag/v0.1.4) |
 | [**landfirst**](https://github.com/montjeffrey/landfirst) | Which branch do I merge first? A live merge planner for repos with parallel local work - ranks branches by merge order, predicts conflicts… | [v0.4.0](https://github.com/montjeffrey/landfirst/releases/tag/v0.4.0) |
 | [**tailnet-sentry**](https://github.com/montjeffrey/tailnet-sentry) | Scan your own tailnet, mark known devices healthy, flag the anomaly, quarantine it. Defensive Go CLI over the Tailscale API. | [v0.1.0](https://github.com/montjeffrey/tailnet-sentry/releases/tag/v0.1.0) |
@@ -83,12 +83,12 @@ here on its own.
 
 | Project | What it does | ★ | Merged | Standing |
 |---|---|---|---|---|
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 298k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) · [3 in review](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | #3 of 408 contributors |
-| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 114k | [1](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #317 of 338 contributors |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 299k | [14](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) · [3 in review](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | #3 of 408 contributors |
+| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 114k | [1](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #321 of 343 contributors |
 | [OpenMathLib/OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) | OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version. | 7.7k | [1](https://github.com/OpenMathLib/OpenBLAS/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | — |
 | [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 136 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 
-<sub>Updated 2026-11-07 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<sub>Updated 2026-11-08 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
 <!-- OSS:END -->
 
 ### Capture the flag
