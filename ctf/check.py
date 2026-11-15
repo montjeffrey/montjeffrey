@@ -37,6 +37,13 @@ LOGIN = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$")
 START, END = "<!-- HALL:START -->", "<!-- HALL:END -->"
 EMPTY = "_Nobody yet. Be the first._"
 MAX_ENTRIES = 200
+# The leak check reads only this many characters of the title or body. A
+# longer text could carry thousands of candidate flags, and the public
+# "leaked" reply would then tell a guesser whether any of them was right.
+MAX_SCAN = 1000
+# The placeholder from the README's one-liners. Pasting it as written is not a
+# leak.
+TEMPLATE = re.compile(r"flag\{(?!\.\.\.\})")
 
 
 def expected(flag: str, login: str) -> str:
@@ -53,12 +60,12 @@ def extract_proof(body: str | None) -> str | None:
 
 
 def leaks(flag: str, text: str | None) -> bool:
-    """Whether text carries the flag, wrapped or not."""
+    """Whether the start of text carries the flag, wrapped or not."""
     if not text:
         return False
-    low = text.lower()
+    low = text[:MAX_SCAN].lower()
     inner = flag[flag.find("{") + 1:flag.rfind("}")].lower()
-    return "flag{" in low or (len(inner) >= 4 and inner in low)
+    return bool(TEMPLATE.search(low)) or (len(inner) >= 4 and inner in low)
 
 
 def verdict(flag: str, login: str, body: str | None,
