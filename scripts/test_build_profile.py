@@ -10,7 +10,9 @@ import unittest
 from scripts import build_profile as bp
 
 FLAG = "FLAG{ALPHA_BRAVO_CHARLIE_DELTA}"
-KEYS = ("QUARANTINE", "BUILDPROVENANCE", "MERGETREE", "TOOMANYREQUESTS")
+# Fixture keys with the same lengths as the real ones (10, 15, 9, 15 letters).
+# They are made up on purpose: never put a real clue answer in the tests.
+KEYS = ("FIXTUREONE", "FIXTURETWOWORDS", "THREEFIXT", "FOURFIXTUREKEYS")
 
 
 class Vigenere(unittest.TestCase):
@@ -44,9 +46,9 @@ class Pieces(unittest.TestCase):
             bp.pieces(FLAG, ("QUA", "B", "M", "T"))
 
     def test_keys_are_letters_only_and_need_four(self):
-        self.assertEqual(bp.parse_keys("tag:quarantine,Build provenance,"
-                                       "merge-tree,429 too many requests"),
-                         ("TAGQUARANTINE",) + KEYS[1:])
+        self.assertEqual(bp.parse_keys("ns:fixtureone,Fixture two words,"
+                                       "three-fixt,4 four fixture keys"),
+                         ("NSFIXTUREONE",) + KEYS[1:])
         for bad in ["", "a,b,c", "a,b,c,", "a,b,c,d,e"]:
             with self.assertRaises(SystemExit):
                 bp.parse_keys(bad)
