@@ -55,6 +55,26 @@ class Proof(unittest.TestCase):
         self.assertEqual(check.verdict(FLAG, "octocat", good, "ctf: proof"),
                          "correct")
 
+    def test_leak_scan_only_reads_the_start_of_the_text(self):
+        # A long body cannot carry a list of guesses: past MAX_SCAN nothing
+        # is compared, so the "leaked" verdict is not a batch guessing oracle.
+        self.assertTrue(check.leaks(FLAG, "it's test! " + "a" * 5000))
+        self.assertFalse(check.leaks(FLAG, "a" * check.MAX_SCAN + " test!"))
+        good = check.expected(FLAG, "octocat")
+        padded = "a" * check.MAX_SCAN + " test! " + good
+        self.assertEqual(check.verdict(FLAG, "octocat", padded), "correct")
+
+    def test_the_documented_template_is_not_a_leak(self):
+        good = check.expected(FLAG, "octocat")
+        self.assertEqual(
+            check.verdict(FLAG, "octocat", "FLAG{...}:octocat" + chr(10) + good),
+            "correct")
+        self.assertEqual(check.verdict(FLAG, "octocat", "flag{...}:octocat"),
+                         "invalid")
+        # Any other FLAG{...} is still treated as a pasted flag.
+        self.assertEqual(check.verdict(FLAG, "octocat", "FLAG{guess}"), "leaked")
+        self.assertEqual(check.verdict(FLAG, "octocat", "FLAG{...x}"), "leaked")
+
     def test_hex_embedded_in_a_longer_run_is_ignored(self):
         good = check.expected(FLAG, "octocat")
         self.assertEqual(check.verdict(FLAG, "octocat", "a" + good), "invalid")
