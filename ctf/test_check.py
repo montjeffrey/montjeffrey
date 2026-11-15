@@ -55,14 +55,17 @@ class Proof(unittest.TestCase):
         self.assertEqual(check.verdict(FLAG, "octocat", good, "ctf: proof"),
                          "correct")
 
-    def test_leak_scan_only_reads_the_start_of_the_text(self):
-        # A long body cannot carry a list of guesses: past MAX_SCAN nothing
-        # is compared, so the "leaked" verdict is not a batch guessing oracle.
+    def test_overlong_text_is_redacted_without_being_compared(self):
+        # A long body cannot carry a list of guesses: past MAX_SCAN the
+        # verdict no longer depends on the content, so it is not a batch
+        # guessing oracle, and padding cannot carry the flag past redaction.
         self.assertTrue(check.leaks(FLAG, "it's test! " + "a" * 5000))
-        self.assertFalse(check.leaks(FLAG, "a" * check.MAX_SCAN + " test!"))
+        self.assertTrue(check.leaks(FLAG, "a" * check.MAX_SCAN + " test!"))
+        self.assertTrue(check.leaks(FLAG, "a" * (check.MAX_SCAN + 1)))
+        self.assertFalse(check.leaks(FLAG, "a" * check.MAX_SCAN))
         good = check.expected(FLAG, "octocat")
-        padded = "a" * check.MAX_SCAN + " test! " + good
-        self.assertEqual(check.verdict(FLAG, "octocat", padded), "correct")
+        padded = "a" * check.MAX_SCAN + " " + good
+        self.assertEqual(check.verdict(FLAG, "octocat", padded), "leaked")
 
     def test_the_documented_template_is_not_a_leak(self):
         good = check.expected(FLAG, "octocat")
