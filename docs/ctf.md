@@ -53,31 +53,33 @@ The clues live in the README and the answers are the keys. A key must be:
 
 - **Learnable only by reading the work.** It shouldn't be on the profile page
   itself.
-- **Stable.** If the fact changes (a project renames its quarantine tag, drops
-  `git merge-tree`, renames "build provenance"), the clue becomes unsolvable.
+- **Stable.** If the fact changes (a project renames a tag, drops a command,
+  renames a feature), the clue becomes unsolvable.
   When a project changes, re-read its clue. If the answer changed, update the
   clue and rotate.
 - **Normalised the same way the generator does it:** capitals, letters only.
-  `merge-tree` becomes `MERGETREE`, and `429 Too Many Requests` becomes
-  `TOOMANYREQUESTS`. The README tells players this rule, so say "letters
+  `some-command` becomes `SOMECOMMAND`, and `404 Not Found` becomes
+  `NOTFOUND`. The README tells players this rule, so say "letters
   only" in any new clue whose answer contains digits.
 - **Unambiguous about which part counts.** If the answer is usually written
   with a prefix or namespace, the clue must say whether it's included.
-  Clue 1's key is `QUARANTINE`, not `TAGQUARANTINE`, so the README says
-  "without the `tag:` prefix". Without that, a player who follows the
+  If a key is `FIXTURE`, not `NS:FIXTURE`, the README says "without the `ns:`
+  prefix". Without that, a player who follows the
   letters-only rule literally decrypts gibberish.
 - **Not drawn on the tiles.** The tiles' log lines and descriptions mustn't
-  spell out an answer. The SecDevOps tile used to say "BUILD PROVENANCE".
+  spell out an answer. An earlier tile once spelled one out in its log.
 
 `.ctf/keys` holds the four answers, comma-separated, in tile order. Commas,
-not colons, because an answer written like `build:provenance` must stay one
+not colons, because an answer written like `ns:fixture` must stay one
 key.
 
 ## Rotating the flag
 
 Rotate when the encoding scheme or a clue changes, or if the flag leaks.
 **Old tiles stay readable in git history**, so a scheme change without a new
-flag gives the old answer away.
+flag gives the old answer away. The same goes for clue answers: if one was ever
+committed (in a test, a doc or a message), it stays in history, so change the
+clue and its answer as well as the flag.
 
 1. Write the new flag to `.ctf/flag`, with no trailing newline, following the
    rules above. Update `.ctf/keys` if a clue changed.

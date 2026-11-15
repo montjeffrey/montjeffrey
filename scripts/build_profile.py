@@ -586,7 +586,7 @@ def vigenere(text: str, key: str, sign: int = 1) -> str:
 def parse_keys(raw: str) -> tuple[str, str, str, str]:
     """Four clue answers, comma-separated; only their letters count.
 
-    Commas, not colons: an answer like tag:quarantine must stay one key.
+    Commas, not colons: an answer like ns:fixture must stay one key.
     """
     keys = tuple(re.sub(r"[^A-Z]", "", k.upper()) for k in raw.split(","))
     if len(keys) != 4 or not all(keys):
