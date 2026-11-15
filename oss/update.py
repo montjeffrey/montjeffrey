@@ -48,7 +48,9 @@ CONTRIBUTOR_PAGES = 5    # look for my rank among the top 500 contributors
 HERE = pathlib.Path(__file__).resolve().parent
 
 # Every character that can start markdown or HTML syntax becomes an entity.
-_ENTITY = {c: "&#%d;" % ord(c) for c in "&<>\"'\\`*_[]()|#!~:@"}
+_ENTITY = {c: "&#%d;" % ord(c) for c in "&<>\"'\\`*_[]()|#!~:@$"}
+# GitHub turns a bare "www." host into a link; the dot becomes an entity.
+_WWW = re.compile(r"www\.", re.IGNORECASE)
 
 
 def text(value: object, limit: int = 140) -> str:
@@ -57,7 +59,8 @@ def text(value: object, limit: int = 140) -> str:
     s = "".join(c for c in s if c.isprintable())
     if len(s) > limit:
         s = s[:limit - 1].rstrip() + "…"
-    return "".join(_ENTITY.get(c, c) for c in s)
+    return _WWW.sub(lambda m: m.group(0)[:-1] + "&#46;",
+                    "".join(_ENTITY.get(c, c) for c in s))
 
 
 def valid_repo(full: str) -> bool:

@@ -59,6 +59,15 @@ class Text(unittest.TestCase):
             self.assertNotIn(ch, out)
         self.assertNotIn(update.END, out)
 
+    def test_bare_www_links_and_math_are_neutralised(self):
+        # GitHub autolinks a bare www. host and renders $...$ as math, and
+        # neither needs a character the other escapes cover.
+        out = update.text("see www.example.com or WWW.Example.com "
+                          "$\\Huge x$ $$y$$", limit=500)
+        self.assertNotIn("$", out)
+        self.assertNotIn("www.", out.lower())
+        self.assertIn("www&#46;example.com", out)
+
     def test_newlines_collapse_and_long_text_truncates(self):
         self.assertEqual(update.text("a\n\n| b"), "a &#124; b")
         self.assertEqual(len(update.text("x" * 500, limit=10)), 10)
