@@ -84,12 +84,13 @@ here on its own.
 
 | Project | What it does | ★ | Merged | Standing |
 |---|---|---|---|---|
-| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 306k | [18](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) · [1 in review](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | #3 of 401 contributors |
-| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 118k | [2](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #152 of 369 contributors |
+| [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 307k | [18](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) · [1 in review](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | #3 of 401 contributors |
+| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 118k | [2](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #155 of 374 contributors |
 | [OpenMathLib/OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) | OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version. | 7.7k | [1](https://github.com/OpenMathLib/OpenBLAS/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | — |
+| [actualbudget/actual](https://github.com/actualbudget/actual) | A local-first personal finance app | 30k | — · [1 in review](https://github.com/actualbudget/actual/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 | [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 137 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 
-<sub>Updated 2026-11-18 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<sub>Updated 2026-11-19 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
 <!-- OSS:END -->
 
 ### Capture the flag
