@@ -80,18 +80,18 @@ here on its own.
 | [**landfirst**](https://github.com/montjeffrey/landfirst) | Which branch do I merge first? A live merge planner for repos with parallel local work - ranks branches by merge order, predicts conflicts… | [v0.4.0](https://github.com/montjeffrey/landfirst/releases/tag/v0.4.0) |
 | [**tailnet-sentry**](https://github.com/montjeffrey/tailnet-sentry) | Scan your own tailnet, mark known devices healthy, flag the anomaly, quarantine it. Defensive Go CLI over the Tailscale API. | [v0.1.0](https://github.com/montjeffrey/tailnet-sentry/releases/tag/v0.1.0) |
 
-**Contributing** · 22 pull requests merged across 3 projects
+**Contributing** · 23 pull requests merged across 4 projects
 
 | Project | What it does | ★ | Merged | Standing |
 |---|---|---|---|---|
 | [affaan-m/ECC](https://github.com/affaan-m/ECC) | Agent harness for Claude Code, Codex and Cursor. I hardened its safety gate and added the evaluation that measures whether its guardrails change outcomes. | 308k | [19](https://github.com/affaan-m/ECC/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #3 of 403 contributors |
-| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 118k | [2](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #158 of 376 contributors |
+| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Persistent Context Across Sessions for Every Agent – Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More | 118k | [2](https://github.com/thedotmack/claude-mem/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #159 of 379 contributors |
+| [actualbudget/actual](https://github.com/actualbudget/actual) | A local-first personal finance app | 30k | [1](https://github.com/actualbudget/actual/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | #317 of 468 contributors |
 | [OpenMathLib/OpenBLAS](https://github.com/OpenMathLib/OpenBLAS) | OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version. | 7.7k | [1](https://github.com/OpenMathLib/OpenBLAS/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Amerged) | — |
-| [actualbudget/actual](https://github.com/actualbudget/actual) | A local-first personal finance app | 30k | — · [1 in review](https://github.com/actualbudget/actual/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 | [supabase/auth](https://github.com/supabase/auth) | A JWT based API for managing users and issuing JWT tokens | 2.6k | — · [1 in review](https://github.com/supabase/auth/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 | [sashs/filebytes](https://github.com/sashs/filebytes) | Library to read and edit files in the following formats&#58; Executable and Linking Format &#40;ELF&#41;, Portable Executable &#40;PE&#41;, MachO and OAT &#40;Android Runtime&#41; | 137 | — · [1 in review](https://github.com/sashs/filebytes/pulls?q=is%3Apr+author%3Amontjeffrey+is%3Aopen) | — |
 
-<sub>Updated 2026-11-21 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
+<sub>Updated 2026-11-22 · rebuilt daily from the GitHub API by [oss/update.py](oss/update.py)</sub>
 <!-- OSS:END -->
 
 ### Capture the flag
